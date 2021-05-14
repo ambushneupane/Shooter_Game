@@ -39,9 +39,10 @@ class Soldier(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.alive = True
         self.char_type = char_type
+
         self.speed = speed
         self.ammo = ammo
-        self.start_ammp = ammo
+        self.start_ammo = ammo
         self.shoot_cooldown = 0
         self.direction = 1
         self.vel_y = 0
@@ -111,11 +112,12 @@ class Soldier(pygame.sprite.Sprite):
         self.rect.y += dy
 
     def shoot(self):
-        if self.shoot_cooldown == 0:
+        if self.shoot_cooldown == 0 and self.ammo >0:
             self.shoot_cooldown = 20
             bullet = Bullet(
                 self.rect.centerx+(0.6*self.rect.size[0]*self.direction), self.rect.centery, self.direction)
             bullet_group.add(bullet)
+            self.ammo -=1
 
     def upadate_animation(self):
         ANIMATION_COOLDOWN = 100
@@ -158,7 +160,7 @@ class Bullet(pygame.sprite.Sprite):
 bullet_group = pygame.sprite.Group()
 
 
-player = Soldier('player', 200, 200, 3, 5, 20)
+player = Soldier('player', 200, 200, 3, 5, 5)
 enemy = Soldier('enemy', 200, 200, 3, 5, 20)
 
 
